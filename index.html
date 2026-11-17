@@ -369,7 +369,10 @@
         function showNameModal() {
             const modal = document.getElementById('name-modal');
             modal.classList.remove('hidden');
-            setTimeout(() => document.getElementById('input-student-name').focus(), 100);
+            // Only auto-focus on devices with a mouse to prevent virtual keyboard glitches on tablets
+            if (window.matchMedia("(pointer: fine)").matches) {
+                setTimeout(() => document.getElementById('input-student-name').focus(), 100);
+            }
         }
 
         function startQuizFromNameModal() {
@@ -481,11 +484,13 @@
                 quizPoints = [];
                 quizState.isSubmitted = false;
                 
-                // Auto focus first input
-                setTimeout(() => {
-                    const firstInput = document.getElementById('input-y-1');
-                    if (firstInput) firstInput.focus();
-                }, 100);
+                // Auto focus first input (only on desktop devices)
+                if (window.matchMedia("(pointer: fine)").matches) {
+                    setTimeout(() => {
+                        const firstInput = document.getElementById('input-y-1');
+                        if (firstInput) firstInput.focus();
+                    }, 100);
+                }
             }
         }
 
